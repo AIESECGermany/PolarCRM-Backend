@@ -9,9 +9,29 @@ router.get('/', (req, res) => {
 router.post('/new', (req, res) => {
     
     try {
-        const { name, email } = req.body
-        const applicant = new Applicant({ name, email })
-        //await applicant.save()
+        const { 
+            firstName,
+            familyName,
+            lc,
+            email,
+            telephone,
+            occupation,
+            german,
+            channel,
+            motivation
+        } = req.body
+        const applicant = new Applicant({
+            firstName,
+            familyName,
+            lc,
+            email,
+            telephone,
+            occupation,
+            german,
+            channel,
+            motivation
+        })
+        applicant.save()
         res.status(201).send({ applicant, message: "Application was recorded!" })
     } catch(err) {
         res.status(400).send({ error: err})
