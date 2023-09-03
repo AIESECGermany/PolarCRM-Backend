@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Backend for PolarCRM using Express, NodeJS, Mongoose and a MongoDB Atlas Database",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"

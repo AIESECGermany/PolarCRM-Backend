@@ -1,5 +1,6 @@
-require('dotenv').config()
-const mongoose = require('mongoose')
+import dotenv from 'dotenv'
+dotenv.config()
+import mongoose from 'mongoose'
 
 const MONGO_URL = process.env.MONGO_URL
 const DB_NAME = process.env.DB_NAME

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
 
 const applicantSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
@@ -13,4 +13,5 @@ const applicantSchema = new mongoose.Schema({
 })
 
 const Applicant =  mongoose.model('Applicant', applicantSchema)
-module.exports = Applicant
+
+export default Applicant

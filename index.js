@@ -1,14 +1,18 @@
-require('dotenv').config()
-require('./db')
-const applicantRoutes = require('./routes/ApplicantRoutes')
+import express from 'express'
+import dotenv from 'dotenv'
+dotenv.config()
+import './db.js'
+import applicantRoutes from './routes/ApplicantRoutes.js'
+import loginRoutes from './routes/LoginRoutes.js'
+
 
 const PORT = process.env.PORT
-const express = require('express')
 
 const app = express()
 app.use(express.json())
 
 app.use('/applicants', applicantRoutes)
+app.use('/login', loginRoutes)
 
 app.get('/', (req, res) => {
     res.json({
