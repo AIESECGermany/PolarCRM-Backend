@@ -13,6 +13,8 @@ export const listApplicants = (req, res) => {
 }
 
 export const newApplicant = async (req, res) => {
+    console.log('New Applicant received')
+    console.table(req.body)
         const { 
             firstName,
             familyName,
@@ -21,7 +23,7 @@ export const newApplicant = async (req, res) => {
             telephone,
             occupation,
             german,
-            channel,
+            mktChannel,
             motivation
         } = req.body
         const applicant = new Applicant({
@@ -32,10 +34,14 @@ export const newApplicant = async (req, res) => {
             telephone,
             occupation,
             german,
-            channel,
+            mktChannel,
             motivation
         })
         await applicant.save()
-        res.status(201).send({ applicant, message: "Application was recorded!" })
+
+        console.log("Applicant has been saved to database")
+        console.log('Sending back response...')
+
+        res.status(201).send({message: req.body, message2: email})
 
 }
