@@ -1,47 +1,58 @@
 // import { getItem, listItems, editItem, addItem, deleteItem } from '../models/applicants.models.js'
 import Applicant from "../models/Applicant.js"
 
-export const listApplicants = (req, res) => {
-    // try {
-    //     const resp = getItem(parseInt(req.params.id))
-    //     res.status(200).json(resp)
-
-    // } catch (err) {
-    //     res.status(500).send(err)
-    // }
-    res.send('Applicant Routes are working')
+export const listCurrentApplicants = async (req, res) => {
+    try {
+        const currentApplicants = await Applicant.find({})
+        res.status(201).send(currentApplicants)
+    }catch(err){
+        res.status(500).send(err)
+    }
 }
 
 export const newApplicant = async (req, res) => {
-    console.log('New Applicant received')
+    // console.log('New Applicant received')
+
     console.table(req.body)
+    try{
         const { 
+            lc,
             firstName,
             familyName,
-            lc,
             email,
             telephone,
             occupation,
             german,
-            mktChannel,
-            motivation
+            motivation,
+            dataSecurity,
+            contactAllowed,
+            linkedin,
+            files,
+            mktChannel
         } = req.body
         const applicant = new Applicant({
+            lc,
             firstName,
             familyName,
-            lc,
             email,
             telephone,
             occupation,
             german,
-            mktChannel,
-            motivation
+            motivation,
+            dataSecurity,
+            contactAllowed,
+            linkedin,
+            files,
+            mktChannel
         })
         await applicant.save()
-
         console.log("Applicant has been saved to database")
-        console.log('Sending back response...')
 
-        res.status(201).send({message: req.body, message2: email})
-
+    }catch(err){
+        //res.status
+        console.log(err)
+    }
+        
+    console.log('Sending back response...')
+    res.status(201).send({message: req.body})
 }
