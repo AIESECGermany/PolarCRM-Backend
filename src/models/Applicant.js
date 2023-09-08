@@ -7,6 +7,7 @@ const changelogSchema = new mongoose.Schema(
     }
 )
 const applicantSchema = new mongoose.Schema({
+    _id: { type: Number, required: true, immutable: true },
     lc: { type: String, required: true, immutable: true },
     firstName: { type: String, required: true, immutable: true, trim: true },
     familyName: { type: String, required: true, immutable: true, trim: true },
@@ -22,8 +23,9 @@ const applicantSchema = new mongoose.Schema({
     mktChannel: { type: String, required: true, immutable: true },
     createdAt: { type: Date, required: true, immutable: true, default: Date.now },
     status: { type: String, required: true, lowercase: true, default: "open" },
-    changelog: { type: [changelogSchema], required: true, default: []},
-    archived: { type: Boolean, required: true, default: false}
+    changelog: { type: [changelogSchema], default: [] },
+    chatbox: { type: [String], default: [] },
+    archived: { type: Boolean, required: true, default: false }
 })
 
 const Applicant =  mongoose.model('Applicant', applicantSchema)
