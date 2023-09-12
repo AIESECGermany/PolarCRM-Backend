@@ -6,6 +6,6 @@ const router = express.Router()
 router.get('/', listCurrentApplicants)
 router.get('/preview', previewCurrentApplicants)
 router.post('/new', newApplicant)
-router.post('/detail', applicantDetails)
+router.get('/detail/:id', applicantDetails)
 
 export default router

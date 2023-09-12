@@ -18,9 +18,9 @@ export const previewCurrentApplicants = async (req, res) => {
     }
 }
 
-export const applicantDetails = async ( req, res) => {
+export const applicantDetails = async (req, res) => {
     try {
-        const applicantDetails = await Applicant.findById(req.body._id);
+        const applicantDetails = await Applicant.findById(req.params.id);
         res.status(201).send(applicantDetails);
     }catch(err){
         res.status(500).send(err);
@@ -28,8 +28,6 @@ export const applicantDetails = async ( req, res) => {
 }
 
 export const newApplicant = async (req, res) => {
-    // console.log('New Applicant received')
-
     console.table(req.body)
     try{
         const { 
