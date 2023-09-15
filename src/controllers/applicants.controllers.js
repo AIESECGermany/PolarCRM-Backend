@@ -1,5 +1,14 @@
 import Applicant from "../models/Applicant.js"
 
+export const openCount = async (req, res) => {
+    try {
+        const openCount = await Applicant.countDocuments({status: "open"});
+        res.status(201).send([openCount]);
+    }catch(err){
+        res.status(500).send(err);
+    }
+}
+
 export const listCurrentApplicants = async (req, res) => {
     try {
         const currentApplicants = await Applicant.find({});
@@ -11,7 +20,7 @@ export const listCurrentApplicants = async (req, res) => {
 
 export const previewCurrentApplicants = async (req, res) => {
     try {
-        const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc status');
+        const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc status createdAt');
         res.status(201).send(previewCurrentApplicants);
     }catch(err){
         res.status(500).send(err);
@@ -45,7 +54,7 @@ export const newApplicant = async (req, res) => {
             files,
             mktChannel
         } = req.body
-        const _id = await Applicant.countDocuments();
+        const _id = await Applicant.countDocuments({});
         const applicant = new Applicant({
             _id,
             lc,
