@@ -4,15 +4,24 @@ dotenv.config()
 import cors from 'cors'
 import './db.js'
 import applicantRoutes from './src/routes/ApplicantRoutes.js'
+import memberRoutes from './src/routes/MemberRoutes.js'
 import loginRoutes from './src/routes/LoginRoutes.js'
 
 const PORT = process.env.PORT;
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+let corsOptions = {
+    origin : "*", //['http://localhost:4200'],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers']
+ }
+
+app.use(cors(corsOptions));
 
 app.use('/applicants', applicantRoutes);
+app.use('/members', memberRoutes);
 app.use('/login', loginRoutes);
 
 app.get('/', (req, res) => {
