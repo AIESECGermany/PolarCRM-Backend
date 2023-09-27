@@ -14,7 +14,7 @@ app.use(express.json());
 
 let corsOptions = {
     origin : "*", //['http://localhost:4200'],
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT'],
     allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers']
  }
 

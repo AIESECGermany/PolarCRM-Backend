@@ -21,7 +21,7 @@ const memberSchema = new mongoose.Schema({
     familyName: { type: String, required: true, immutable: true, trim: true },
     email: { type: String, required: true, immutable: true, trim: true, lowercase: true },
     telephone: { type: Number, required: true, immutable: true },
-    aiesecEmail: { type: String, trim: true, lowercase: true, default: "" },
+    aiesecEmail: { type: String, trim: true, lowercase: true, default: "unknown@aiesec.net" },
     membershipVerified: { type: Boolean, required: true, default: false },
     files: { type: Buffer, immutable: true },
     createdAt: { type: Date, required: true, immutable: true, default: Date.now },
@@ -29,9 +29,19 @@ const memberSchema = new mongoose.Schema({
     roleCurrent: { type: memberRoleSchema, required: true, default: { role: "Newbie", function: "TM" }},
     rolePast: { type: [memberRoleSchema], default: [] },
     changelog: { type: [changelogSchema], default: [] },
-    chatbox: { type: [String], default: [] },
+    chatbox: { type: [String], default: [""] },
     archived: { type: Boolean, required: true, default: false }
 })
+
+memberSchema.pre('save', async function(next) {
+    const query = Member.where({ firstName: this.firstName, familyName: this.familyName });
+    const duplicate = await query.findOne();
+    if(duplicate != null) {
+        throw new Error("Member already exists!");
+    }else{
+        next();
+    }
+});
 
 // memberSchema.virtual('domain').get(function() {
 //     return this.email.slice(this.email.indexOf('@') + 1);

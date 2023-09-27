@@ -80,3 +80,18 @@ export const newApplicant = async (req, res) => {
         res.status(500).send("Error saving new applicant data to database")
     }
 }
+
+export const updateApplicantStatus = async (req, res) => {
+    try {
+        const {
+            _id,
+            status
+        } = req.body;
+        let updatedApplicant = await Applicant.findById(_id);
+        updatedApplicant.status = status;
+        await updatedApplicant.save();
+        res.status(201).send(updatedApplicant);
+    }catch(err){
+        res.status(500).send(err);
+    }
+}

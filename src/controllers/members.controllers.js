@@ -38,15 +38,15 @@ export const memberDetails = async (req, res) => {
 }
 
 export const newMember = async (req, res) => {
-    console.table(req.body)
     try{
         const { 
             lc,
             firstName,
             familyName,
             email,
-            telephone
+            telephone,
         } = req.body
+
         const _id = await Member.countDocuments({});
         const member = new Member({
             _id,
@@ -57,7 +57,7 @@ export const newMember = async (req, res) => {
             telephone
         })
         await member.save()
-        res.status(201).send({ message: member })
+        res.status(201).send(member);
 
     }catch(err){
         console.log(err)
