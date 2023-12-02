@@ -19,9 +19,20 @@ export const listCurrentApplicants = async (req, res) => {
 }
 
 export const previewCurrentApplicants = async (req, res) => {
+    const LAST_SIXTY_DAYS = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000);
     try {
-        const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc status createdAt');
+        const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc status createdAt')
+        .where('createdAt').gt(LAST_SIXTY_DAYS);
         res.status(201).send(previewCurrentApplicants);
+    }catch(err){
+        res.status(500).send(err);
+    }
+}
+
+export const previewAllApplicants = async (req, res) => {
+    try {
+        const previewAllApplicants = await Applicant.find({}).select('_id firstName familyName lc status createdAt');
+        res.status(201).send(previewAllApplicants);
     }catch(err){
         res.status(500).send(err);
     }
