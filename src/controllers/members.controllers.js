@@ -21,8 +21,19 @@ export const listCurrentMembers = async (req, res) => {
 
 export const previewCurrentMembers = async (req, res) => {
     try {
-        const previewCurrentMembers = await Member.find({}).select('_id firstName familyName lc status roleCurrent membershipVerified');
+        const previewCurrentMembers = await Member.find({})
+        .select('_id firstName familyName lc status roleCurrent membershipVerified')
+        .where('archived').equals(false);
         res.status(201).send(previewCurrentMembers);
+    }catch(err){
+        res.status(500).send(err);
+    }
+}
+
+export const previewAllMembers = async (req, res) => {
+    try {
+        const previewAllMembers = await Member.find({}).select('_id firstName familyName lc status roleCurrent membershipVerified');
+        res.status(201).send(previewAllMembers);
     }catch(err){
         res.status(500).send(err);
     }
