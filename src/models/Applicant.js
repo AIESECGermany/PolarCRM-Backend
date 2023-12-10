@@ -1,13 +1,15 @@
 import mongoose from "mongoose"
 
-const changelogSchema = new mongoose.Schema(
+const commentSchema = new mongoose.Schema(
     {
         changedAt: { type: Date, required: true, immutable: true, default: Date.now },
-        newStatus: { type: String, required: true, immutable: true }
+        entry: { type: String, required: true, immutable: true, default: "New Applicant Created" },
+        userTyped: { type: Boolean, required: true, immutable: true }
     }
 )
 const applicantSchema = new mongoose.Schema({
     _id: { type: Number, required: true, immutable: true },
+    createdAt: { type: Date, required: true, immutable: true, default: Date.now },
     lc: { type: String, required: true, immutable: true },
     firstName: { type: String, required: true, immutable: true, trim: true },
     familyName: { type: String, required: true, immutable: true, trim: true },
@@ -19,13 +21,10 @@ const applicantSchema = new mongoose.Schema({
     dataSecurity: { type: Boolean, immutable: true },
     contactAllowed: { type: Boolean, immutable: true},
     linkedin: { type: String, immutable: true, trim: true, lowercase: true },
-    files: { type: Buffer, immutable: true},
     mktChannel: { type: String, required: true, immutable: true },
-    createdAt: { type: Date, required: true, immutable: true, default: Date.now },
-    status: { type: String, required: true, lowercase: true, default: "open" },
-    changelog: { type: [changelogSchema], default: [] },
-    chatbox: { type: [String], default: [] },
-    archived: { type: Boolean, required: true, default: false }
+    stage: { type: String, required: true, lowercase: true, default: "open" },
+    comments: { type: [commentSchema] },
+    files: { type: Buffer, immutable: true}
 })
 
 const Applicant =  mongoose.model('Applicant', applicantSchema)

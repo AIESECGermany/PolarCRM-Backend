@@ -22,8 +22,8 @@ export const listCurrentMembers = async (req, res) => {
 export const previewCurrentMembers = async (req, res) => {
     try {
         const previewCurrentMembers = await Member.find({})
-        .select('_id firstName familyName lc status roleCurrent membershipVerified')
-        .where('archived').equals(false);
+        .select('_id firstName familyName lc stage currentRole membershipVerified')
+        .where('stage').nin(['dropped', 'terminated', 'alumni']);
         res.status(201).send(previewCurrentMembers);
     }catch(err){
         res.status(500).send(err);
@@ -32,14 +32,14 @@ export const previewCurrentMembers = async (req, res) => {
 
 export const previewAllMembers = async (req, res) => {
     try {
-        const previewAllMembers = await Member.find({}).select('_id firstName familyName lc status roleCurrent membershipVerified');
+        const previewAllMembers = await Member.find({}).select('_id firstName familyName lc stage currentRole membershipVerified');
         res.status(201).send(previewAllMembers);
     }catch(err){
         res.status(500).send(err);
     }
 }
 
-export const memberDetails = async (req, res) => {
+export const getMemberDetails = async (req, res) => {
     try {
         const memberDetails = await Member.findById(req.params.id);
         res.status(201).send(memberDetails);
@@ -71,7 +71,6 @@ export const newMember = async (req, res) => {
         res.status(201).send(member);
 
     }catch(err){
-        console.log(err)
-        res.status(500).send("Error saving new member to database")
+        res.status(500).send(err)
     }
 }

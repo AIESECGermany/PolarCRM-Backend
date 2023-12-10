@@ -2,7 +2,7 @@ import Applicant from "../models/Applicant.js"
 
 export const openCount = async (req, res) => {
     try {
-        const openCount = await Applicant.countDocuments({status: "open"});
+        const openCount = await Applicant.countDocuments({stage: "open"});
         res.status(201).send([openCount]);
     }catch(err){
         res.status(500).send(err);
@@ -21,7 +21,7 @@ export const listCurrentApplicants = async (req, res) => {
 export const previewCurrentApplicants = async (req, res) => {
     const LAST_SIXTY_DAYS = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000);
     try {
-        const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc status createdAt')
+        const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt')
         .where('createdAt').gt(LAST_SIXTY_DAYS);
         res.status(201).send(previewCurrentApplicants);
     }catch(err){
@@ -31,14 +31,14 @@ export const previewCurrentApplicants = async (req, res) => {
 
 export const previewAllApplicants = async (req, res) => {
     try {
-        const previewAllApplicants = await Applicant.find({}).select('_id firstName familyName lc status createdAt');
+        const previewAllApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt');
         res.status(201).send(previewAllApplicants);
     }catch(err){
         res.status(500).send(err);
     }
 }
 
-export const applicantDetails = async (req, res) => {
+export const getApplicantDetails = async (req, res) => {
     try {
         const applicantDetails = await Applicant.findById(req.params.id);
         res.status(201).send(applicantDetails);
@@ -92,14 +92,14 @@ export const newApplicant = async (req, res) => {
     }
 }
 
-export const updateApplicantStatus = async (req, res) => {
+export const updateApplicantStage = async (req, res) => {
     try {
         const {
             _id,
-            status
+            stage
         } = req.body;
         let updatedApplicant = await Applicant.findById(_id);
-        updatedApplicant.status = status;
+        updatedApplicant.stage = stage;
         await updatedApplicant.save();
         res.status(201).send(updatedApplicant);
     }catch(err){
