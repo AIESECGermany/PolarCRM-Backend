@@ -4,7 +4,7 @@ const commentSchema = new mongoose.Schema(
     {
         changedAt: { type: Date, required: true, immutable: true, default: Date.now },
         entry: { type: String, required: true, immutable: true, default: "New Applicant Created" },
-        userTyped: { type: Boolean, required: true, immutable: true }
+        userTyped: { type: Boolean, required: true, immutable: true, default: false }
     }
 )
 const applicantSchema = new mongoose.Schema({
@@ -23,7 +23,7 @@ const applicantSchema = new mongoose.Schema({
     linkedin: { type: String, immutable: true, trim: true, lowercase: true },
     mktChannel: { type: String, required: true, immutable: true },
     stage: { type: String, required: true, lowercase: true, default: "open" },
-    comments: { type: [commentSchema] },
+    comments: { type: [commentSchema], default: { changedAt: undefined, entry: undefined, userTyped: undefined } },
     files: { type: Buffer, immutable: true}
 })
 

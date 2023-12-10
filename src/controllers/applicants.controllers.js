@@ -92,14 +92,16 @@ export const newApplicant = async (req, res) => {
     }
 }
 
-export const updateApplicantStage = async (req, res) => {
+export const updateApplicant = async (req, res) => {
     try {
         const {
             _id,
-            stage
+            stage,
+            comments
         } = req.body;
         let updatedApplicant = await Applicant.findById(_id);
         updatedApplicant.stage = stage;
+        updatedApplicant.comments = comments;
         await updatedApplicant.save();
         res.status(201).send(updatedApplicant);
     }catch(err){

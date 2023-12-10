@@ -3,8 +3,8 @@ import mongoose from "mongoose"
 const commentSchema = new mongoose.Schema(
     {
         changedAt: { type: Date, required: true, immutable: true, default: Date.now },
-        entry: { type: String, required: true, immutable: true, default: "New Member Created" },
-        userTyped: { type: Boolean, required: true, immutable: true }
+        entry: { type: String, required: true, immutable: true, default: "New Member Selected" },
+        userTyped: { type: Boolean, required: true, immutable: true, default: false }
     }
 )
 
@@ -33,7 +33,7 @@ const memberSchema = new mongoose.Schema({
     stage: { type: String, required: true, lowercase: true, default: "accepted" },
     currentRole: { type: memberRoleSchema, default: { role: undefined, function: undefined, firstDateInRole: undefined } },
     pastRole: { type: [memberRoleSchema], default: [] },
-    comments: { type: [commentSchema], default: [] },
+    comments: { type: [commentSchema], default: { changedAt: undefined, entry: undefined, userTyped: undefined } }
 })
 
 memberSchema.pre('save', async function(next) {
