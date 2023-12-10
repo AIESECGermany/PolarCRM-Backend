@@ -14,6 +14,7 @@ const memberRoleSchema = new mongoose.Schema({
     jobDescription: { type: String },
     firstDateInRole: { type: Date, required: true, default: Date.now },
     lastDateInRole: { type: Date },
+    dateOfRealized: { type: Date },
     endOfTerm: { type: Date }
 })
 
