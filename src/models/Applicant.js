@@ -22,7 +22,7 @@ const applicantSchema = new mongoose.Schema({
     contactAllowed: { type: Boolean, immutable: true},
     linkedin: { type: String, immutable: true, trim: true, lowercase: true },
     mktChannel: { type: String, required: true, immutable: true },
-    stage: { type: String, required: true, lowercase: true, default: "open" },
+    stage: { type: String, required: true, default: "open" },
     comments: { type: [commentSchema], default: { changedAt: undefined, entry: undefined, userTyped: undefined } },
     files: { type: Buffer, immutable: true}
 })
