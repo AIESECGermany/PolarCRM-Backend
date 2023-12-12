@@ -36,19 +36,19 @@ const memberSchema = new mongoose.Schema({
     comments: { type: [commentSchema], default: { changedAt: undefined, entry: undefined, userTyped: undefined } }
 })
 
-memberSchema.pre('save', async function(next) {
-    const query = Member.where({
-        firstName: this.firstName,
-        familyName: this.familyName,
-        lc: this.lc
-    });
-    const duplicate = await query.findOne();
-    if(duplicate != null) {
-        throw new Error("Member already exists!");
-    }else{
-        next();
-    }
-});
+// memberSchema.pre('save', async function(next) {
+//     const query = Member.where({
+//         firstName: this.firstName,
+//         familyName: this.familyName,
+//         lc: this.lc
+//     });
+//     const duplicate = await query.findOne();
+//     if(duplicate != null) {
+//         throw new Error("Member already exists!");
+//     }else{
+//         next();
+//     }
+// });
 
 // memberSchema.virtual('domain').get(function() {
 //     return this.email.slice(this.email.indexOf('@') + 1);

@@ -74,3 +74,20 @@ export const newMember = async (req, res) => {
         res.status(500).send(err)
     }
 }
+
+export const updateMember = async (req, res) => {
+    try {
+        const {
+            _id,
+            stage,
+            comments
+        } = req.body;
+        let updatedMember = await Member.findById(_id);
+        updatedMember.stage = stage;
+        updatedMember.comments = comments;
+        await updatedMember.save();
+        res.status(201).send(updatedMember);
+    }catch(err){
+        res.status(500).send(err);
+    }
+}

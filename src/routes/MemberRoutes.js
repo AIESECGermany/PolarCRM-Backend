@@ -3,7 +3,8 @@ import { listCurrentMembers,
          newMember,
          getMemberDetails,
          countMembers,
-         previewAllMembers
+         previewAllMembers,
+         updateMember
         } from '../controllers/members.controllers.js'
 import express from 'express'
 
@@ -13,6 +14,7 @@ router.get('/', listCurrentMembers)
 router.get('/preview/current', previewCurrentMembers)
 router.get('/preview/all', previewAllMembers)
 router.post('/new', newMember)
+router.put('/update', updateMember)
 router.get('/detail/:id', getMemberDetails)
 router.get('/count', countMembers)
 
