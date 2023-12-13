@@ -65,7 +65,8 @@ export const newApplicant = async (req, res) => {
             files,
             mktChannel
         } = req.body
-        const _id = await Applicant.countDocuments({});
+        let _id = await Applicant.countDocuments({});
+        _id++;
         const applicant = new Applicant({
             _id,
             lc,

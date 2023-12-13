@@ -58,7 +58,8 @@ export const newMember = async (req, res) => {
             telephone,
         } = req.body
 
-        const _id = await Member.countDocuments({});
+        let _id = await Member.countDocuments({});
+        _id++;
         const member = new Member({
             _id,
             lc,
