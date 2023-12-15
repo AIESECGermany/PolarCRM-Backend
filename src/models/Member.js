@@ -30,7 +30,7 @@ const memberSchema = new mongoose.Schema({
     aiesecEmail: { type: String, trim: true, lowercase: true, default: "" },
     membershipVerified: { type: Boolean, required: true, default: false },
     files: { type: Buffer, immutable: true },
-    stage: { type: String, required: true, default: "accepted" },
+    stage: { type: String, required: true, default: "none" },
     currentRole: { type: memberRoleSchema, default: { role: undefined, function: undefined, firstDateInRole: undefined } },
     pastRole: { type: [memberRoleSchema], default: [] },
     comments: { type: [commentSchema], default: { changedAt: undefined, entry: undefined, userTyped: undefined } }
