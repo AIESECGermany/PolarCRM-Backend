@@ -9,8 +9,9 @@ const commentSchema = new mongoose.Schema(
 )
 
 const memberRoleSchema = new mongoose.Schema({
-    role: { type: String, required: true, default: "None" },
-    function: { type: String, required: true, default: "None" },
+    role: { type: String, required: true, default: "none" },
+    function: { type: String, required: true, default: "none" },
+    stage: { type: String, required: true, default: "none" },
     jobDescription: { type: String },
     firstDateInRole: { type: Date, required: true, default: Date.now },
     lastDateInRole: { type: Date },
@@ -30,8 +31,7 @@ const memberSchema = new mongoose.Schema({
     aiesecEmail: { type: String, trim: true, lowercase: true, default: "" },
     membershipVerified: { type: Boolean, required: true, default: false },
     files: { type: Buffer, immutable: true },
-    stage: { type: String, required: true, default: "none" },
-    currentRole: { type: memberRoleSchema, default: { role: undefined, function: undefined, firstDateInRole: undefined } },
+    currentRole: { type: memberRoleSchema, default: { role: undefined, function: undefined, firstDateInRole: undefined, stage: undefined } },
     pastRole: { type: [memberRoleSchema], default: [] },
     comments: { type: [commentSchema], default: { changedAt: undefined, entry: undefined, userTyped: undefined } }
 })

@@ -22,8 +22,8 @@ export const listCurrentMembers = async (req, res) => {
 export const previewCurrentMembers = async (req, res) => {
     try {
         const previewCurrentMembers = await Member.find({})
-        .select('_id firstName familyName lc stage currentRole membershipVerified')
-        .where('stage').nin(['dropped', 'terminated', 'alumni']);
+        .select('_id firstName familyName lc currentRole membershipVerified')
+        .where('currentRole.stage').nin(['dropped', 'terminated', 'advanced', 'alumni']);
         res.status(201).send(previewCurrentMembers);
     }catch(err){
         res.status(500).send(err);
@@ -32,7 +32,7 @@ export const previewCurrentMembers = async (req, res) => {
 
 export const previewAllMembers = async (req, res) => {
     try {
-        const previewAllMembers = await Member.find({}).select('_id firstName familyName lc stage currentRole membershipVerified');
+        const previewAllMembers = await Member.find({}).select('_id firstName familyName lc currentRole membershipVerified');
         res.status(201).send(previewAllMembers);
     }catch(err){
         res.status(500).send(err);
@@ -80,11 +80,31 @@ export const updateMember = async (req, res) => {
     try {
         const {
             _id,
-            stage,
+            currentRole,
             comments
         } = req.body;
         let updatedMember = await Member.findById(_id);
-        updatedMember.stage = stage;
+        updatedMember.currentRole.stage = currentRole.stage;
+        updatedMember.comments = comments;
+        await updatedMember.save();
+        res.status(201).send(updatedMember);
+    }catch(err){
+        res.status(500).send(err);
+    }
+}
+
+export const addNewMemberRole = async (req, res) => {
+    try {
+        const {
+            _id,
+            currentRole,
+            comments
+        } = req.body;
+        let updatedMember = await Member.findById(_id);
+        updatedMember.currentRole.role = currentRole.role;
+        updatedMember.currentRole.function = currentRole.function;
+        updatedMember.currentRole.jobDescription = currentRole.jobDescription;
+        updatedMember.currentRole.endOfTerm = currentRole.endOfTerm;
         updatedMember.comments = comments;
         await updatedMember.save();
         res.status(201).send(updatedMember);
