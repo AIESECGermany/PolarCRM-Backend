@@ -81,11 +81,17 @@ export const updateMember = async (req, res) => {
         const {
             _id,
             currentRole,
-            comments
+            comments,
+            pastRole
         } = req.body;
         let updatedMember = await Member.findById(_id);
         updatedMember.currentRole.stage = currentRole.stage;
+        updatedMember.currentRole.role = currentRole.role;
+        updatedMember.currentRole.function = currentRole.function;
+        updatedMember.currentRole.dateOfRealized = currentRole.dateOfRealized;
+        updatedMember.currentRole.lastDateInRole = currentRole.lastDateInRole;
         updatedMember.comments = comments;
+        updatedMember.pastRole = pastRole;
         await updatedMember.save();
         res.status(201).send(updatedMember);
     }catch(err){
