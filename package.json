@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "polar-backend",
   "version": "1.0.0",
   "description": "Backend for PolarCRM using Express, NodeJS, Mongoose and a MongoDB Atlas Database",
   "main": "index.js",
