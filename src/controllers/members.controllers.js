@@ -58,6 +58,9 @@ export const newMember = async (req, res) => {
             telephone,
         } = req.body
 
+        const alreadyMember = await Member.findOne({ lc: lc, firstName: firstName, familyName: familyName });
+        if(alreadyMember) return res.status(200).send({ message: 'Member already exists' });
+
         let _id = await Member.countDocuments({});
         _id++;
         const member = new Member({
@@ -69,7 +72,7 @@ export const newMember = async (req, res) => {
             telephone
         })
         await member.save()
-        res.status(201).send(member);
+        res.status(201).send({ message: 'New member created successfully' });
 
     }catch(err){
         res.status(500).send(err)
