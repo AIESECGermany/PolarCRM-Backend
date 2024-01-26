@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 
 let corsOptions = {
-    origin : "*", //['http://localhost:4200'],
+    origin : process.env.ORIGIN_URI,
     methods: ['GET', 'POST', 'PUT'],
     allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers']
  }
