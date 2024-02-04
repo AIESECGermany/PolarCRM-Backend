@@ -1,4 +1,4 @@
-import { listCurrentMembers,
+import { 
          previewCurrentMembers,
          newMember,
          getMemberDetails,
@@ -11,7 +11,6 @@ import express from 'express'
 
 const router = express.Router()
 
-router.get('/', listCurrentMembers)
 router.get('/preview/current', previewCurrentMembers)
 router.get('/preview/all', previewAllMembers)
 router.post('/new', newMember)

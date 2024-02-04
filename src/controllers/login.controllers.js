@@ -71,12 +71,12 @@ export const loginUser = async (req, res) => {
                 return res.status(201).send({ userRole: "local", lc: lc });
             case 'carlos':
             case 'mcvpim':
-                return res.status(201).send({ userRole: "admin" });
+                return res.status(201).send({ userRole: "admin", lc: 'nsb' });
             default:
                 if(LCs.includes(userEmail.split('.')[1].split('@')[0])) {
-                    return res.status(500).send({ userRole: "not-allowed" });
+                    return res.status(500).send({ userRole: "not-allowed", lc: 'none' });
                 } else {
-                    return res.status(201).send({ userRole: "national" });
+                    return res.status(201).send({ userRole: "national", lc: 'nsb' });
                 }
         }
     } catch(err) {

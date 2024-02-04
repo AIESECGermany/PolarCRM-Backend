@@ -1,5 +1,4 @@
 import {
-    listCurrentApplicants,
     previewCurrentApplicants,
     newApplicant,
     getApplicantDetails,
@@ -11,7 +10,6 @@ import express from 'express'
 
 const router = express.Router()
 
-router.get('/', listCurrentApplicants)
 router.get('/preview/current', previewCurrentApplicants)
 router.get('/preview/all', previewAllApplicants)
 router.post('/new', newApplicant)

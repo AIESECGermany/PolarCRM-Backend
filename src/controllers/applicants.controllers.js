@@ -2,17 +2,13 @@ import Applicant from "../models/Applicant.js"
 
 export const openCount = async (req, res) => {
     try {
-        const openCount = await Applicant.countDocuments({stage: "open"});
-        res.status(201).send([openCount]);
-    }catch(err){
-        res.status(500).send(err);
-    }
-}
-
-export const listCurrentApplicants = async (req, res) => {
-    try {
-        const currentApplicants = await Applicant.find({});
-        res.status(201).send(currentApplicants);
+        if(req.query.lc === 'nsb') {
+            const openCount = await Applicant.countDocuments({stage: "open"});
+            res.status(201).send([openCount]);
+        } else {
+            const openCount = await Applicant.countDocuments({stage: "open", lc: req.query.lc});
+            res.status(201).send([openCount]);
+        }
     }catch(err){
         res.status(500).send(err);
     }
@@ -21,9 +17,15 @@ export const listCurrentApplicants = async (req, res) => {
 export const previewCurrentApplicants = async (req, res) => {
     const LAST_SIXTY_DAYS = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000);
     try {
-        const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt')
-        .where('createdAt').gt(LAST_SIXTY_DAYS);
-        res.status(201).send(previewCurrentApplicants);
+        if(req.query.lc === 'nsb') {
+            const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt')
+            .where('createdAt').gt(LAST_SIXTY_DAYS);
+            res.status(201).send(previewCurrentApplicants);
+        } else {
+            const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt')
+            .where('lc').equals(req.query.lc).where('createdAt').gt(LAST_SIXTY_DAYS);
+            res.status(201).send(previewCurrentApplicants);
+        }
     }catch(err){
         res.status(500).send(err);
     }
@@ -31,8 +33,13 @@ export const previewCurrentApplicants = async (req, res) => {
 
 export const previewAllApplicants = async (req, res) => {
     try {
-        const previewAllApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt');
-        res.status(201).send(previewAllApplicants);
+        if(req.query.lc === 'nsb') {
+            const previewAllApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt');
+            res.status(201).send(previewAllApplicants);
+        } else {
+            const previewAllApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt').where('lc').equals(req.query.lc);
+            res.status(201).send(previewAllApplicants);
+        }
     }catch(err){
         res.status(500).send(err);
     }
@@ -48,7 +55,6 @@ export const getApplicantDetails = async (req, res) => {
 }
 
 export const newApplicant = async (req, res) => {
-    console.table(req.body)
     try{
         const { 
             lc,
@@ -98,8 +104,13 @@ export const updateApplicant = async (req, res) => {
         const {
             _id,
             stage,
-            comments
+            comments,
+            lc
         } = req.body;
+        if(req.query.lc !== 'nsb' && lc !== req.query.lc) {
+            res.status(500).send({ message: 'Not allowed to update this applicant' });
+            return;
+        }
         let updatedApplicant = await Applicant.findById(_id);
         updatedApplicant.stage = stage;
         updatedApplicant.comments = comments;
