@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "lint": "eslint ."
   },
   "author": "Carlos Giese Bizcocho",
   "license": "ISC",
@@ -17,5 +18,10 @@
     "google-auth-library": "^9.4.1",
     "mongoose": "^7.4.5",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "eslint": "^8.57.0"
   }
 }

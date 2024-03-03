@@ -1,12 +1,13 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema(
     {
         changedAt: { type: Date, required: true, immutable: true, default: Date.now },
-        entry: { type: String, required: true, immutable: true, default: "New Applicant Created" },
+        entry: { type: String, required: true, immutable: true, default: 'New Applicant Created' },
         userTyped: { type: Boolean, required: true, immutable: true, default: false }
     }
-)
+);
+
 const applicantSchema = new mongoose.Schema({
     _id: { type: Number, required: true, immutable: true },
     createdAt: { type: Date, required: true, immutable: true, default: Date.now },
@@ -22,11 +23,11 @@ const applicantSchema = new mongoose.Schema({
     contactAllowed: { type: Boolean, immutable: true},
     linkedin: { type: String, immutable: true, trim: true, lowercase: true },
     mktChannel: { type: String, required: true, immutable: true },
-    stage: { type: String, required: true, default: "open" },
+    stage: { type: String, required: true, default: 'open' },
     comments: { type: [commentSchema], default: { changedAt: undefined, entry: undefined, userTyped: undefined } },
     files: { type: Buffer, immutable: true}
-})
+});
 
-const Applicant =  mongoose.model('Applicant', applicantSchema)
+const Applicant =  mongoose.model('Applicant', applicantSchema);
 
-export default Applicant
+export default Applicant;

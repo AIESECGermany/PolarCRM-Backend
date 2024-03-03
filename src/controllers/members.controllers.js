@@ -1,4 +1,4 @@
-import Member from "../models/Member.js"
+import Member from '../models/Member.js';
 
 export const countMembers = async (req, res) => {
     
@@ -13,25 +13,25 @@ export const countMembers = async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-}
+};
 
 export const previewCurrentMembers = async (req, res) => {
     try {
         if(req.query.lc === 'nsb') {
             const previewCurrentMembers = await Member.find({})
-            .select('_id firstName familyName lc currentRole membershipVerified')
-            .where('currentRole.stage').nin(['dropped', 'terminated', 'advanced', 'alumni']);
+                .select('_id firstName familyName lc currentRole membershipVerified')
+                .where('currentRole.stage').nin(['dropped', 'terminated', 'advanced', 'alumni']);
             res.status(201).send(previewCurrentMembers);
         } else {
             const previewCurrentMembers = await Member.find({})
-            .select('_id firstName familyName lc currentRole membershipVerified')
-            .where('lc').equals(req.query.lc).where('currentRole.stage').nin(['dropped', 'terminated', 'advanced', 'alumni']);
+                .select('_id firstName familyName lc currentRole membershipVerified')
+                .where('lc').equals(req.query.lc).where('currentRole.stage').nin(['dropped', 'terminated', 'advanced', 'alumni']);
             res.status(201).send(previewCurrentMembers);
         }
     }catch(err){
         res.status(500).send(err);
     }
-}
+};
 
 export const previewAllMembers = async (req, res) => {
     try {
@@ -45,7 +45,7 @@ export const previewAllMembers = async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-}
+};
 
 export const getMemberDetails = async (req, res) => {
     try {
@@ -59,7 +59,7 @@ export const getMemberDetails = async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-}
+};
 
 export const newMember = async (req, res) => {
     try{
@@ -69,7 +69,7 @@ export const newMember = async (req, res) => {
             familyName,
             email,
             telephone,
-        } = req.body
+        } = req.body;
 
         if(req.query.lc !== 'nsb' && lc !== req.query.lc) {
             res.status(500).send({ message: 'Not allowed to create new member' });
@@ -87,14 +87,14 @@ export const newMember = async (req, res) => {
             familyName,
             email,
             telephone
-        })
-        await member.save()
+        });
+        await member.save();
         res.status(201).send({ message: 'New member created successfully' });
 
     }catch(err){
-        res.status(500).send(err)
+        res.status(500).send(err);
     }
-}
+};
 
 export const updateMember = async (req, res) => {
     try {
@@ -122,7 +122,7 @@ export const updateMember = async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-}
+};
 
 export const addNewMemberRole = async (req, res) => {
     try {
@@ -148,4 +148,4 @@ export const addNewMemberRole = async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-}
+};

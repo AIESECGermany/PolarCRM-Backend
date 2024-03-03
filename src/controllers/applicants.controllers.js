@@ -1,35 +1,35 @@
-import Applicant from "../models/Applicant.js"
+import Applicant from '../models/Applicant.js';
 
 export const openCount = async (req, res) => {
     try {
         if(req.query.lc === 'nsb') {
-            const openCount = await Applicant.countDocuments({stage: "open"});
+            const openCount = await Applicant.countDocuments({stage: 'open'});
             res.status(201).send([openCount]);
         } else {
-            const openCount = await Applicant.countDocuments({stage: "open", lc: req.query.lc});
+            const openCount = await Applicant.countDocuments({stage: 'open', lc: req.query.lc});
             res.status(201).send([openCount]);
         }
     }catch(err){
         res.status(500).send(err);
     }
-}
+};
 
 export const previewCurrentApplicants = async (req, res) => {
     const LAST_SIXTY_DAYS = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000);
     try {
         if(req.query.lc === 'nsb') {
             const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt')
-            .where('createdAt').gt(LAST_SIXTY_DAYS);
+                .where('createdAt').gt(LAST_SIXTY_DAYS);
             res.status(201).send(previewCurrentApplicants);
         } else {
             const previewCurrentApplicants = await Applicant.find({}).select('_id firstName familyName lc stage createdAt')
-            .where('lc').equals(req.query.lc).where('createdAt').gt(LAST_SIXTY_DAYS);
+                .where('lc').equals(req.query.lc).where('createdAt').gt(LAST_SIXTY_DAYS);
             res.status(201).send(previewCurrentApplicants);
         }
     }catch(err){
         res.status(500).send(err);
     }
-}
+};
 
 export const previewAllApplicants = async (req, res) => {
     try {
@@ -43,7 +43,7 @@ export const previewAllApplicants = async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-}
+};
 
 export const getApplicantDetails = async (req, res) => {
     try {
@@ -52,7 +52,7 @@ export const getApplicantDetails = async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-}
+};
 
 export const newApplicant = async (req, res) => {
     try{
@@ -70,7 +70,7 @@ export const newApplicant = async (req, res) => {
             linkedin,
             files,
             mktChannel
-        } = req.body
+        } = req.body;
         let _id = await Applicant.countDocuments({});
         _id++;
         const applicant = new Applicant({
@@ -88,16 +88,16 @@ export const newApplicant = async (req, res) => {
             linkedin,
             files,
             mktChannel
-        })
-        await applicant.save()
-        console.log("Applicant has been saved to database")
-        res.status(201).send({ message: applicant })
+        });
+        await applicant.save();
+        console.log('Applicant has been saved to database');
+        res.status(201).send({ message: applicant });
 
     }catch(err){
-        console.log(err)
-        res.status(500).send("Error saving new applicant data to database")
+        console.log(err);
+        res.status(500).send('Error saving new applicant data to database');
     }
-}
+};
 
 export const updateApplicant = async (req, res) => {
     try {
@@ -119,4 +119,4 @@ export const updateApplicant = async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-}
+};

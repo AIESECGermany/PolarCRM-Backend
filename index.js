@@ -1,11 +1,11 @@
-import express from 'express'
-import dotenv from 'dotenv'
-dotenv.config()
-import cors from 'cors'
-import './db.js'
-import applicantRoutes from './src/routes/ApplicantRoutes.js'
-import memberRoutes from './src/routes/MemberRoutes.js'
-import loginRoutes from './src/routes/LoginRoutes.js'
+import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
+import cors from 'cors';
+import './db.js';
+import applicantRoutes from './src/routes/ApplicantRoutes.js';
+import memberRoutes from './src/routes/MemberRoutes.js';
+import loginRoutes from './src/routes/LoginRoutes.js';
 
 const PORT = process.env.PORT;
 
@@ -16,7 +16,7 @@ let corsOptions = {
     origin : process.env.ORIGIN_URI,
     methods: ['GET', 'POST', 'PUT'],
     allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers']
- }
+};
 
 app.use(cors(corsOptions));
 
