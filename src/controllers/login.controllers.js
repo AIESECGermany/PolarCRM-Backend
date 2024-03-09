@@ -62,9 +62,15 @@ export const loginUser = async (req, res) => {
     try {
         const { token } = req.body;
         const userEmail = await verifyUser(token);
-        const lc = userEmail.split('.', 1)[1].split('@')[0];
+        const emailPrefix = userEmail.split('@')[0];
+        const role = emailPrefix.split('.')[0];
+        let lc = emailPrefix.split('.')[1];
+        if(lc === 'berlin') {
+            const suffix = emailPrefix.split('.')[2];
+            lc = [ lc, suffix ].join('.');
+        }
         console.log(lc);
-        switch(userEmail.split('.')[0]) {
+        switch(role) {
             case 'vptm':
             case 'test':
             case 'lcp':
