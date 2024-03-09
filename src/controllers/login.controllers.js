@@ -62,23 +62,25 @@ export const loginUser = async (req, res) => {
     try {
         const { token } = req.body;
         const userEmail = await verifyUser(token);
-        console.log(`${userEmail} logged in`);
+        const lc = userEmail.split('.', 1)[1].split('@')[0];
         switch(userEmail.split('.')[0]) {
             case 'vptm':
+            case 'test':
             case 'lcp':
             case 'tm': {
-                const lc = userEmail.split('.')[1].split('@')[0];
+                console.log(`${userEmail} logged in`);
                 return res.status(201).send({ userRole: 'local', lc });
             }
             case 'carlos':
             case 'mcvpim':
+                console.log(`${userEmail} logged in`);
                 return res.status(201).send({ userRole: 'admin', lc: 'nsb' });
             default: {
-                const lc = userEmail.split('.', 1)[1].split('@')[0];
                 if(LCs.includes(lc)) {
-                    console.log(`${userEmail} has tried to login`);
+                    console.log(`${userEmail} has tried to login unsuccessfully`);
                     return res.status(500).send({ userRole: 'not-allowed', lc: 'none' });
                 } else {
+                    console.log(`${userEmail} logged in`);
                     return res.status(201).send({ userRole: 'national', lc: 'nsb' });
                 }
             }
