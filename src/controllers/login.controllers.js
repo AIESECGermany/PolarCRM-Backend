@@ -69,7 +69,6 @@ export const loginUser = async (req, res) => {
             const suffix = emailPrefix.split('.')[2];
             lc = [ lc, suffix ].join('-');
         }
-        console.log(lc);
         switch(role) {
             case 'vptm':
             case 'test':

@@ -6,6 +6,7 @@ import './db.js';
 import applicantRoutes from './src/routes/ApplicantRoutes.js';
 import memberRoutes from './src/routes/MemberRoutes.js';
 import loginRoutes from './src/routes/LoginRoutes.js';
+import utilsRoutes from './src/routes/UtilsRoutes.js';
 
 const PORT = process.env.PORT;
 
@@ -23,6 +24,7 @@ app.use(cors(corsOptions));
 app.use('/applicants', applicantRoutes);
 app.use('/members', memberRoutes);
 app.use('/login', loginRoutes);
+app.use('/utils', utilsRoutes);
 
 app.get('/', (req, res) => {
     res.json({
