@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs';
 import {
     upload
 } from '../controllers/utils.controllers.js';
@@ -12,7 +13,9 @@ const __dirname = dirname(__filename);
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         try {
-            cb(null, __dirname + '../../../uploads/');
+            const path = __dirname + '../../../uploads/';
+            if(!fs.existsSync(path)) { fs.mkdirSync(path, { recursive: true }); }
+            cb(null, path);
         } catch (err) {
             console.log(err);
         }
