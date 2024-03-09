@@ -67,7 +67,7 @@ export const loginUser = async (req, res) => {
         let lc = emailPrefix.split('.')[1];
         if(lc === 'berlin') {
             const suffix = emailPrefix.split('.')[2];
-            lc = [ lc, suffix ].join('.');
+            lc = [ lc, suffix ].join('-');
         }
         console.log(lc);
         switch(role) {
