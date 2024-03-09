@@ -63,6 +63,7 @@ export const loginUser = async (req, res) => {
         const { token } = req.body;
         const userEmail = await verifyUser(token);
         const lc = userEmail.split('.', 1)[1].split('@')[0];
+        console.log(lc);
         switch(userEmail.split('.')[0]) {
             case 'vptm':
             case 'test':
@@ -87,6 +88,7 @@ export const loginUser = async (req, res) => {
                 
         }
     } catch(err) {
+        console.log(err);
         return res.status(500).send(err);
     }
 };
