@@ -124,6 +124,50 @@ export const updateMember = async (req, res) => {
     }
 };
 
+export const addMemberInfo = async (req, res) => {
+    try {
+        const {
+            _id,
+            lc,
+            aiesecEmail,
+            expaId
+        } = req.body;
+        if(req.query.lc !== 'nsb' && lc !== req.query.lc) {
+            res.status(500).send({ message: 'Not allowed to update this member' });
+            return;
+        }
+        if(!aiesecEmail || !expaId) { return; }
+        let updatedMember = await Member.findById(_id);
+        updatedMember.aiesecEmail = aiesecEmail;
+        updatedMember.expaId = expaId;
+        await updatedMember.save();
+        res.status(201).send(updatedMember);
+    } catch(err) {
+        res.status(500).send(err);
+    }
+};
+
+export const verifyMembership = async (req, res) => {
+    try {
+        const {
+            _id,
+            membershipVerified,
+            lc
+        } = req.body;
+        if( membershipVerified ) { return; }
+        if(req.query.lc !== 'nsb' && lc !== req.query.lc) {
+            res.status(500).send({ message: 'Not allowed to update this member' });
+            return;
+        }
+        let updatedMember = await Member.findById(_id);
+        updatedMember.membershipVerified = true;
+        await updatedMember.save();
+        res.status(201).send(updatedMember);
+    }catch(err){
+        res.status(500).send(err);
+    }
+};
+
 export const addNewMemberRole = async (req, res) => {
     try {
         const {
