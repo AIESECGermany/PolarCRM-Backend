@@ -36,10 +36,10 @@ export const previewCurrentMembers = async (req, res) => {
 export const previewAllMembers = async (req, res) => {
     try {
         if(req.query.lc === 'nsb') {
-            const previewAllMembers = await Member.find({}).select('_id firstName familyName lc currentRole membershipVerified');
+            const previewAllMembers = await Member.find({}).select('_id firstName familyName lc currentRole membershipVerified createdAt');
             res.status(201).send(previewAllMembers);
         } else {
-            const previewAllMembers = await Member.find({}).select('_id firstName familyName lc currentRole membershipVerified').where('lc').equals(req.query.lc);
+            const previewAllMembers = await Member.find({}).select('_id firstName familyName lc currentRole membershipVerified createdAt').where('lc').equals(req.query.lc);
             res.status(201).send(previewAllMembers);
         }
     }catch(err){
