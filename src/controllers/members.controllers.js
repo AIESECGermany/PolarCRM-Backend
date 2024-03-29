@@ -185,6 +185,7 @@ export const addNewMemberRole = async (req, res) => {
         updatedMember.currentRole.function = currentRole.function;
         updatedMember.currentRole.jobDescription = currentRole.jobDescription;
         updatedMember.currentRole.stage = 'accepted';
+        updatedMember.currentRole.firstDateInRole = new Date().toISOString();
         updatedMember.currentRole.endOfTerm = currentRole.endOfTerm;
         updatedMember.comments = comments;
         await updatedMember.save();
